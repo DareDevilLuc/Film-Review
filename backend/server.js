@@ -1,7 +1,11 @@
 const cors = require('cors')
+require('dotenv').config()
 const express = require('express')
+const connectDB = require('./db/connection.js')
 
 const app = express()
+
+console.log()
 
 app.use(cors({
   origin: ['http://localhost:5173']
@@ -13,30 +17,10 @@ app.get('/', (req, res) => {
   res.send('Testing this shit')
 })
 
-
-app.get('/products', (req, res) => {
-  res.json([
-    { id: 1, name: 'Whatever' },
-    { id: 2, name: 'Bilat' },
-  ])
-})
-
-app.get('/products/:id', (req, res) => {
-  const id = Number(req.params.id)
-
-  const products = [
-    { id: 1, name: 'Whatever' },
-    { id: 2, name: 'Bilat' },
-  ]
-
-  const requestedProduct = products.find((product) => product.id === id)
-  res.json(requestedProduct)
-})
-
-app.get('/message', (req, res) => {
-  res.json({ message: 'HELLO FROM BACKEND' })
-})
+connectDB()
 
 app.listen(3000, () => {
   console.log('Server is running')
+
 })
+
