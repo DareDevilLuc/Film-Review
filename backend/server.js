@@ -7,8 +7,6 @@ const reviewRouter = require('./routes/reviews.js')
 
 const app = express()
 
-console.log()
-
 app.use(cors({
   origin: ['http://localhost:5173']
 }))

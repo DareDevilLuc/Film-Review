@@ -2,6 +2,4 @@ const express = require('express')
 const router = express.Router()
 const Review = require('../models/Review.js')
 
-eodule.exports = router
-
-
+module.exports = router
