@@ -4,7 +4,7 @@ import { ref } from 'vue';
 const title = ref('')
 const director = ref('')
 const releaseYear = ref()
-const synposis = ref('')
+const synopsis = ref('')
 const films = ref([])
 const reviews = ref([])
 const filmId = ref('')
@@ -63,7 +63,7 @@ function newFilm() {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({title : title.value, director: director.value, releaseYear :
-    releaseYear.value, synposis: synposis.value})
+    releaseYear.value, synopsis: synposis.value})
   })
   .then(response => {return response.json()})
   .then(data => console.log('Response from server: ', data.response))
@@ -121,7 +121,7 @@ function getSpecificReviews () {
     <input v-model="title" type="text" placeholder="title">
     <input v-model="director" type="text" placeholder="director">
     <input v-model="releaseYear" type="number" placeholder="year released">
-    <textarea v-model="synposis" placeholder="synposis"></textarea>
+    <textarea v-model="synopsis" placeholder="synposis"></textarea>
     <button type="submit">New Film</button>
   </form>
 
