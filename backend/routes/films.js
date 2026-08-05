@@ -10,21 +10,27 @@ router.get('/', async (req, res) => {
   catch(e){
     console.error(e)
     res.status(500).json({
-      error: 'Internal server error'
+      response: 'Internal server error'
     })
   }
 })
 
+router.get('/:filmId', async (req, res) => {
+  const filmId = req.params.filmId
+  const film = await Film.findById( filmId )
+  res.json(film)
+})
+
 router.post('/', async (req, res) => {
   try{
-    Film.create(req.body)
+    await Film.create(req.body)
     console.log('New document added in Films')
     res.json({response: 'New document added in Films'})
   }
   catch(e){
     console.error(e)
     res.status(500).json({
-      error: 'Internal server error'
+      response: 'Internal server error'
     })
   }
 })
