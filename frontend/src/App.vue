@@ -12,6 +12,7 @@ const reviewerName = ref('')
 const rating = ref()
 const comment = ref('')
 const specificId = ref('')
+const specificIdRev = ref('')
 
 function getFilms() {
   fetch('http://localhost:3000/films')
@@ -87,6 +88,12 @@ function getSpecificFilm () {
   .then(data => console.log(data))
 }
 
+function getSpecificReviews () {
+  fetch('http://localhost:3000/reviews/' + specificIdRev.value)
+  .then(response => { return response.json()})
+  .then(data => console.log(data))
+}
+
 </script>
 
 <template>
@@ -105,7 +112,7 @@ function getSpecificFilm () {
 
   <div v-if="reviews.length > 0">
     <li v-for="review in reviews" :key="review._id">
-      {{ review.reviewerName }}: {{ review.comment }}
+      {{ review.reviewerName }}: {{ review.comment }} | REVIEWED: {{ review.film.title }} | RATING = {{ review.rating }}
     </li>
   </div>
   <p v-else>Have not gotten reviews yet.</p>
@@ -129,6 +136,11 @@ function getSpecificFilm () {
   <form @submit.prevent="getSpecificFilm">
     <input v-model="specificId" placeholder="film id">
     <button type="submit">Get specific film</button>
+  </form>
+
+  <form @submit.prevent="getSpecificReviews()">
+    <input v-model="specificIdRev" placeholder="film id">
+    <button type="submit">Get specific reviews</button>
   </form>
 
 </template>
