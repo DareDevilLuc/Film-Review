@@ -6,6 +6,7 @@ const director = ref('')
 const releaseYear = ref()
 const synposis = ref('')
 const films = ref([])
+const reviews = ref([])
 const filmId = ref('')
 const reviewerName = ref('')
 const rating = ref()
@@ -33,6 +34,27 @@ function getFilms() {
   })
 }
 
+function getReviews() {
+  fetch('http://localhost:3000/reviews')
+  .then(response => {
+    if(!response.ok){
+      throw new Error(`Server error: ${response.status} ${response.statusText}`)
+    }
+    return response.json()
+  })
+  .then(data => {
+    if(!data){ console.log("Reviews are empty")}
+    else {
+      console.log(data)
+      reviews.value = data
+
+    }
+  })
+  .catch(err => {
+    console.error(err)
+  })
+}
+
 function newFilm() {
   fetch('http://localhost:3000/films', {
     method: 'POST',
@@ -45,6 +67,18 @@ function newFilm() {
   .then(response => {return response.json()})
   .then(data => console.log('Response from server: ', data.response))
   .catch(err => console.error(err))
+}
+
+function newReview() {
+  fetch('http://localhost:3000/reviews', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({film: filmId.value, reviewerName: reviewerName.value, rating: rating.value, comment: comment.value})
+  })
+  .then(response => {return response.json()})
+  .then(data => console.log('Respone from server: ', data.response))
 }
 
 function getSpecificFilm () {
@@ -67,6 +101,15 @@ function getSpecificFilm () {
   </div>
   <p v-else>Have not gotten films yet.</p>
 
+  <button @click="getReviews()">Get reviews</button>
+
+  <div v-if="reviews.length > 0">
+    <li v-for="review in reviews" :key="review._id">
+      {{ review.reviewerName }}: {{ review.comment }}
+    </li>
+  </div>
+  <p v-else>Have not gotten reviews yet.</p>
+
   <form @submit.prevent="newFilm">
     <input v-model="title" type="text" placeholder="title">
     <input v-model="director" type="text" placeholder="director">
@@ -75,7 +118,7 @@ function getSpecificFilm () {
     <button type="submit">New Film</button>
   </form>
 
-  <form @submit.prevent="">
+  <form @submit.prevent="newReview">
     <input v-model="filmId" type="text" placeholder="id">
     <input v-model="reviewerName" type="text" placeholder="reviewer's name">
     <input v-model="rating" type="number" placeholder="rating">

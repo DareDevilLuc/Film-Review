@@ -15,11 +15,6 @@ router.get('/', async (req, res) => {
   }
 })
 
-router.get('/:filmId', async (req, res) => {
-  const filmId = req.params.filmId
-  const film = await Review.findById( filmId )
-  res.json(film)
-})
 
 router.post('/', async (req, res) => {
   try{
