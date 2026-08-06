@@ -63,7 +63,7 @@ function newFilm() {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({title : title.value, director: director.value, releaseYear :
-    releaseYear.value, synopsis: synposis.value})
+    releaseYear.value, synopsis: synopsis.value})
   })
   .then(response => {return response.json()})
   .then(data => console.log('Response from server: ', data.response))
@@ -103,7 +103,7 @@ function getSpecificReviews () {
 
   <div v-if="films.length > 0">
     <li v-for="film in films" :key="film._id">
-      {{ film._id }}
+      {{ film._id }} | {{ film.title }}
     </li>
   </div>
   <p v-else>Have not gotten films yet.</p>
