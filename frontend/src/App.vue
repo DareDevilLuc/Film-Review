@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 
+
 const title = ref('')
 const director = ref('')
 const releaseYear = ref()
@@ -8,6 +9,7 @@ const synopsis = ref('')
 const films = ref([])
 const reviews = ref([])
 const filmId = ref('')
+const deleteFilmId = ref('')
 const reviewerName = ref('')
 const rating = ref()
 const comment = ref('')
@@ -33,6 +35,10 @@ function getFilms() {
   .catch(err => {
     console.error(err)
   })
+}
+
+function deleteFilms() {
+  fetch('http://localhost:3000/films/' + deleteFilmId.value, {method: 'DELETE'})
 }
 
 function getReviews() {
@@ -141,6 +147,11 @@ function getSpecificReviews () {
   <form @submit.prevent="getSpecificReviews()">
     <input v-model="specificIdRev" placeholder="film id">
     <button type="submit">Get specific reviews</button>
+  </form>
+
+  <form @submit.prevent="deleteFilms()">
+    <input v-model="deleteFilmId" placeholder="film id">
+    <button type="submit">Delete specific film</button>
   </form>
 
 </template>

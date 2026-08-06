@@ -35,5 +35,14 @@ router.post('/', async (req, res) => {
   }
 })
 
+router.delete('/:filmId', async (req, res) => {
+  const filmId = req.params.filmId
+  await Film.deleteOne({_id: filmId})
+  .then(() => {
+    console.log('Film has been deleted')
+  })
+  .catch(err => console.error(err))
+})
+
 
 module.exports = router
